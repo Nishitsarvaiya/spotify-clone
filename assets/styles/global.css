@@ -38,6 +38,14 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'Metropolis Black';
+	src: url('../fonts/Metropolis-Black.woff'), url('../fonts/Metropolis-Black.woff2'),
+		url('../fonts/Metropolis-Black.eot');
+	font-weight: 900;
+	font-style: normal;
+}
+
 *,
 *::before,
 *::after {

@@ -4,10 +4,13 @@ import { HomeIcon, SearchIcon, LibraryIcon, PlusIcon, HeartIcon } from '@heroico
 import styles from './Sidebar.module.css';
 import { useEffect, useState } from 'react';
 import useSpotify from '../../hooks/useSpotify';
+import { useRecoilState } from 'recoil';
+import { playlistIdState } from '../../atoms/playlistAtom';
 
 const Sidebar = () => {
 	const { data: session, status } = useSession();
 	const [playlists, setPlaylists] = useState([]);
+	const [playlistID, setPlaylistID] = useRecoilState(playlistIdState);
 	const spotifyApi = useSpotify();
 
 	useEffect(() => {
@@ -17,6 +20,10 @@ const Sidebar = () => {
 			});
 		}
 	}, [session, spotifyApi]);
+
+	const selectPlaylistHandler = (playlistID) => {
+		setPlaylistID(playlistID);
+	};
 
 	return (
 		<nav className={styles.Sidebar}>
@@ -94,7 +101,9 @@ const Sidebar = () => {
 					{playlists.map((playlist) => (
 						<li key={playlist.id}>
 							<div className='px-6'>
-								<button className='h-8 w-full text-left hover:text-white transition-colors duration-200 ease-in-out'>
+								<button
+									className='h-8 w-full text-left hover:text-white transition-colors duration-200 ease-in-out'
+									onClick={() => selectPlaylistHandler(playlist.id)}>
 									<span className='block text-sm overflow-hidden overflow-ellipsis whitespace-nowrap tracking-wide'>
 										{playlist.name}
 									</span>
