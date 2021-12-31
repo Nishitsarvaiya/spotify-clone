@@ -29,3 +29,12 @@
 	font-weight: 900;
 	line-height: 1;
 }
+
+.PlaylistDesc {
+	font-family: 'Metropolis Regular';
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	word-break: break-word;
+	display: -webkit-box;
+	overflow: hidden;
+}

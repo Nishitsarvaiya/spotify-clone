@@ -24,19 +24,46 @@ const Center = () => {
 	const playlistID = useRecoilValue(playlistIdState);
 	const [playlist, setPlaylist] = useRecoilState(playlistState);
 
+	const getPlaylistDuration = () => {
+		let duration = 0;
+		playlist?.tracks.items.forEach((track) => {
+			duration += track.track.duration_ms;
+		});
+
+		return formatDuration(duration);
+	};
+
+	const formatDuration = (duration_ms) => {
+		const portions = [];
+
+		const msInHour = 1000 * 60 * 60;
+		const hours = Math.trunc(duration_ms / msInHour);
+		if (hours > 0) {
+			portions.push(hours + ' hr');
+			duration_ms = duration_ms - hours * msInHour;
+		}
+
+		const msInMinute = 1000 * 60;
+		const minutes = Math.trunc(duration_ms / msInMinute);
+		if (minutes > 0) {
+			portions.push(minutes + ' min');
+			duration_ms = duration_ms - minutes * msInMinute;
+		}
+
+		return portions.join(' ');
+	};
+
 	useEffect(() => {
 		setHeaderColor(shuffle(colors).pop());
 	}, [playlistID]);
 
 	useEffect(() => {
-		if (spotifyApi.getAccessToken()) {
-			spotifyApi
-				.getPlaylist(playlistID)
-				.then((data) => {
-					setPlaylist(data.body);
-				})
-				.catch((err) => console.log('SOMETHING WENT WRONG >>>', err));
-		}
+		spotifyApi
+			.getPlaylist(playlistID)
+			.then((data) => {
+				setPlaylist(data.body);
+			})
+			.catch((err) => console.log('SOMETHING WENT WRONG >>>', err));
 	}, [spotifyApi, playlistID]);
 
 	return (
@@ -54,9 +81,30 @@ const Center = () => {
 				<div className='relative flex flex-col justify-end'>
 					<h2 className='uppercase text-xs font-bold text-white'>Playlist</h2>
 					<h1
-						className={`2xl:text-8xl xl:text-7xl text-5xl text-white tracking-tight ${styles.PlaylistTitle}`}>
+						className={`2xl:text-8xl xl:text-7xl text-5xl text-white tracking-tight mt-2 mb-2 ${styles.PlaylistTitle}`}>
 						{playlist?.name}
 					</h1>
+					<p
+						className={`text-sm text-white text-opacity-70 font-normal tracking-wider mb-1 ${styles.PlaylistDesc}`}>
+						{playlist?.description}
+					</p>
+					<div className='flex'>
+						<span className='text-sm text-white font-normal tracking-wider hover:underline'>
+							<a href='#'>{playlist?.owner.display_name}</a>
+						</span>
+						{playlist?.followers.total > 0 ? (
+							<span className='text-sm text-white text-opacity-70 tracking-wider before:content-["•"] before:mx-1'>
+								{playlist?.followers.total === 1
+									? playlist?.followers.total + ' Like'
+									: playlist?.followers.total + ' Likes'}
+							</span>
+						) : (
+							''
+						)}
+						<span className='text-sm text-white text-opacity-70 tracking-wider before:content-["•"] before:mx-1'>
+							{playlist?.tracks.total} Songs, {getPlaylistDuration()}
+						</span>
+					</div>
 				</div>
 			</div>
 		</main>
