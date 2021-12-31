@@ -37,15 +37,6 @@ const Sidebar = () => {
 				</div>
 				<ul className='list-none'>
 					<li className='px-2'>
-						<button
-							className='flex items-center gap-4 h-10 px-4 cursor-pointer hover:text-white transition-colors duration-200 ease-linear'
-							onClick={() => signOut()}>
-							<span className='text-sm font-bold overflow-hidden overflow-ellipsis whitespace-nowrap mt-1 tracking-wide'>
-								Log Out
-							</span>
-						</button>
-					</li>
-					<li className='px-2'>
 						<a
 							href='#'
 							className='flex items-center gap-4 h-10 px-4 cursor-pointer hover:text-white transition-colors duration-200 ease-linear'>

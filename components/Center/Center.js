@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { playlistIdState, playlistState } from '../../atoms/playlistAtom';
 import useSpotify from '../../hooks/useSpotify';
 import { useSession } from 'next-auth/react';
+import { UserMenu } from '..';
 
 const colors = [
 	'bg-indigo-500',
@@ -106,6 +107,7 @@ const Center = () => {
 						</span>
 					</div>
 				</div>
+				<UserMenu />
 			</div>
 		</main>
 	);
