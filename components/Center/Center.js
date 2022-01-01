@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Center.module.css';
 import { shuffle } from 'lodash';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { playlistIdState, playlistState } from '../../atoms/playlistAtom';
 import useSpotify from '../../hooks/useSpotify';
 import { useSession } from 'next-auth/react';
-import { UserMenu } from '..';
+import { UserMenu, UserPopup } from '..';
 
 const colors = [
 	'bg-indigo-500',
@@ -24,6 +24,7 @@ const Center = () => {
 	const spotifyApi = useSpotify();
 	const playlistID = useRecoilValue(playlistIdState);
 	const [playlist, setPlaylist] = useRecoilState(playlistState);
+	const playlistName = useRef();
 
 	const getPlaylistDuration = () => {
 		let duration = 0;
@@ -54,6 +55,28 @@ const Center = () => {
 		return portions.join(' ');
 	};
 
+	const calculatePlaylistFontSize = () => {
+		if (playlist?.name.length >= 30 && playlist?.name.length <= 40) {
+			playlistName.current.style = `
+				padding: 0.08em 0;
+				visibility: visible;
+				width: 100%;
+				font-size: clamp(48px, 3.5vw, 96px);
+				line-height: clamp(48px, 3.5vw, 96px);
+			`;
+		} else if (playlist?.name.length > 40) {
+			playlistName.current.style = `
+				padding: 0.08em 0;
+				visibility: visible;
+				width: 100%;
+				font-size: clamp(48px, 2vw, 96px);
+				line-height: clamp(48px, 2vw, 96px);
+			`;
+		} else {
+			playlistName.current.style = '';
+		}
+	};
+
 	useEffect(() => {
 		setHeaderColor(shuffle(colors).pop());
 	}, [playlistID]);
@@ -66,6 +89,10 @@ const Center = () => {
 			})
 			.catch((err) => console.log('SOMETHING WENT WRONG >>>', err));
 	}, [spotifyApi, playlistID]);
+
+	useEffect(() => {
+		calculatePlaylistFontSize();
+	}, [playlist]);
 
 	return (
 		<main className={styles.CenterView}>
@@ -81,10 +108,11 @@ const Center = () => {
 				</div>
 				<div className='relative flex flex-col justify-end'>
 					<h2 className='uppercase text-xs font-bold text-white'>Playlist</h2>
-					<h1
-						className={`2xl:text-8xl xl:text-7xl text-5xl text-white tracking-tight mt-2 mb-2 ${styles.PlaylistTitle}`}>
-						{playlist?.name}
-					</h1>
+					<span className={styles.PlaylistTitle}>
+						<h1 ref={playlistName} className={`text-white tracking-tight mt-2 mb-2`}>
+							{playlist?.name}
+						</h1>
+					</span>
 					<p
 						className={`text-sm text-white text-opacity-70 font-normal tracking-wider mb-1 ${styles.PlaylistDesc}`}>
 						{playlist?.description}
@@ -108,6 +136,7 @@ const Center = () => {
 					</div>
 				</div>
 				<UserMenu />
+				<UserPopup />
 			</div>
 		</main>
 	);

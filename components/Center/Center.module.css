@@ -25,9 +25,21 @@
 }
 
 .PlaylistTitle {
-	font-family: 'Metropolis Black';
-	font-weight: 900;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-align: left;
+	width: 100%;
+	word-break: break-word;
+}
+
+.PlaylistTitle h1 {
+	font-family: 'Metropolis Bold';
+	font-weight: 700;
 	line-height: 1;
+	font-size: clamp(48px, 6vw, 96px);
+	line-height: clamp(48px, 6vw, 96px);
 }
 
 .PlaylistDesc {
