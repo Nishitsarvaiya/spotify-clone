@@ -1,0 +1,6 @@
+.Player {
+    background-color: #181818;
+    grid-area: player;
+    width: 100%;
+    z-index: 10;
+}

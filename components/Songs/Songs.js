@@ -9,8 +9,8 @@ const Songs = () => {
     return (
         <div className='px-4 lg:px-8'>
             <div>
-                <div className='mx-4 lg:mx-[-32px] mb-4 px-8 box-content h-9 sticky top-16 z-[2]'>
-                    <div aria-colcount='5' className='h-full grid gap-4 px-4 border-b border-opacity-10'>
+                <div className='mx-[-16px] lg:mx-[-32px] mb-4 px-4 lg:px-8 box-content h-9 sticky top-16 z-[2]'>
+                    <div className='grid-row h-full grid gap-4 px-4 border-b border-opacity-10'>
                         <div className='flex items-center justify-self-end'>#</div>
                         <div className='flex items-center justify-self-start'>
                             <div className='flex items-center justify-center'>
@@ -19,14 +19,14 @@ const Songs = () => {
                                 </span>
                             </div>
                         </div>
-                        <div className='flex items-center justify-self-start'>
+                        <div className='items-center justify-self-start hidden md:flex'>
                             <div className='flex items-center justify-center'>
                                 <span className='overflow-hidden overflow-ellipsis text-xs uppercase tracking-wider'>
                                     album
                                 </span>
                             </div>
                         </div>
-                        <div className='flex items-center justify-self-start'>
+                        <div className='items-center justify-self-start hidden lg:flex'>
                             <div className='flex items-center justify-center'>
                                 <span className='overflow-hidden overflow-ellipsis text-xs uppercase tracking-wider'>
                                     date added
