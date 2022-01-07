@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import useSpotify from '../../hooks/useSpotify';
 import { useRecoilState } from 'recoil';
 import { playlistIdState } from '../../atoms/playlistAtom';
+import { OverlayScrollbarsComponent } from 'overlayscrollbars-react';
 
 const Sidebar = () => {
     const { data: session, status } = useSession();
@@ -26,7 +27,7 @@ const Sidebar = () => {
 
     return (
         <nav className={styles.Sidebar}>
-            <div className='flex flex-col w-full pt-6'>
+            <div className='flex flex-col flex-1 w-full pt-6'>
                 <div className='logo mb-4 h-12 flex items-center'>
                     <h1 className='text-white text-2xl font-bold tracking-wider'>
                         <Link href='/'>
@@ -71,72 +72,101 @@ const Sidebar = () => {
                             </span>
                         </a>
                     </li>
-                    <li className='px-2 mt-8'>
-                        <a
-                            href='#'
-                            className='flex items-center gap-4 h-10 px-4 cursor-pointer hover:text-white transition-colors duration-200 ease-linear'>
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                stroke='#b3b3b3'
-                                aria-hidden='true'
-                                className='w-6 h-6'>
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth='1'
-                                    d='M12 4v16m8-8H4'></path>
-                            </svg>
-                            <span className='text-[13px] leading-[15px] font-bold truncate whitespace-nowrap mt-1 tracking-wide'>
-                                Create Playlist
-                            </span>
-                        </a>
-                    </li>
-                    <li className='px-2 mb-4'>
-                        <a
-                            href='#'
-                            className='flex items-center gap-4 h-10 px-4 cursor-pointer hover:text-white transition-colors duration-200 ease-linear'>
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                fill='none'
-                                viewBox='0 0 24 24'
-                                stroke='#b3b3b3'
-                                aria-hidden='true'
-                                className='w-6 h-6'>
-                                <path
-                                    strokeLinecap='round'
-                                    strokeLinejoin='round'
-                                    strokeWidth='1'
-                                    d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'></path>
-                            </svg>
-                            <span className='text-[13px] leading-[15px] font-bold truncate whitespace-nowrap mt-1 tracking-wide'>
-                                Liked Songs
-                            </span>
-                        </a>
-                    </li>
                 </ul>
-                <hr className='border-b border-[#282828] border-t-0 mx-6' />
-                <div>
-                    <ul className='list-none pt-2'>
-                        <div>
-                            {playlists.map((playlist) => (
-                                <li key={playlist.id}>
-                                    <div className='px-6'>
-                                        <button
-                                            className={`h-8 w-full text-left hover:text-white transition-colors duration-200 ease-in-out ${
-                                                playlist.id === playlistID ? 'text-white' : ''
-                                            }`}
-                                            onClick={() => selectPlaylistHandler(playlist.id)}>
-                                            <span className='block text-[13px] leading-[15px] truncate whitespace-nowrap tracking-wide'>
-                                                {playlist.name}
-                                            </span>
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
+                <div className='flex flex-col h-full min-h-0 flex-1 flex-grow flex-shrink-0 mt-6 relative'>
+                    <div className='flex flex-col min-h-0 flex-1 h-full'>
+                        <div className='px-2'>
+                            <button className='flex items-center gap-4 h-10 px-4 cursor-pointer hover:text-white transition-colors duration-200 ease-linear'>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='none'
+                                    viewBox='0 0 24 24'
+                                    stroke='#b3b3b3'
+                                    aria-hidden='true'
+                                    className='w-6 h-6'>
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='1'
+                                        d='M12 4v16m8-8H4'></path>
+                                </svg>
+                                <span className='text-[13px] leading-[15px] font-bold truncate whitespace-nowrap mt-1 tracking-wide'>
+                                    Create Playlist
+                                </span>
+                            </button>
                         </div>
-                    </ul>
+                        <div className='px-2'>
+                            <button className='flex items-center gap-4 h-10 px-4 cursor-pointer hover:text-white transition-colors duration-200 ease-linear'>
+                                <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='none'
+                                    viewBox='0 0 24 24'
+                                    stroke='#b3b3b3'
+                                    aria-hidden='true'
+                                    className='w-6 h-6'>
+                                    <path
+                                        strokeLinecap='round'
+                                        strokeLinejoin='round'
+                                        strokeWidth='1'
+                                        d='M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z'></path>
+                                </svg>
+                                <span className='text-[13px] leading-[15px] font-bold truncate whitespace-nowrap mt-1 tracking-wide'>
+                                    Liked Songs
+                                </span>
+                            </button>
+                        </div>
+                        <div className='relative'>
+                            <hr className='border-none bg-[#282828] mx-6 mt-2 h-[1px] min-h-[1px]' />
+                            <div className='absolute left-0 right-0 bottom-[-16px] h-4 pointer-events-none bg-gradient-to-b from-[rgba(0,0,0,0.7)] to-transparent z-[1]'></div>
+                        </div>
+                        <OverlayScrollbarsComponent
+                            options={{
+                                resize: 'none',
+                                className: 'h-full overscroll-y-contain os-theme-spotify-clone',
+                            }}>
+                            <ul className='list-none pt-2'>
+                                <div
+                                    style={{
+                                        contain: 'layout size',
+                                        position: 'relative',
+                                        height: playlists.length * 32 * 2,
+                                    }}>
+                                    <div>
+                                        {playlists.map((playlist) => (
+                                            <li key={playlist.id}>
+                                                <div className='px-6'>
+                                                    <button
+                                                        className={`h-8 w-full text-left hover:text-white transition-colors duration-200 ease-in-out ${
+                                                            playlist.id === playlistID ? 'text-white' : ''
+                                                        }`}
+                                                        onClick={() => selectPlaylistHandler(playlist.id)}>
+                                                        <span className='block text-[13px] leading-[15px] truncate whitespace-nowrap tracking-wide'>
+                                                            {playlist.name}
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        ))}
+                                        {playlists.map((playlist) => (
+                                            <li key={playlist.id}>
+                                                <div className='px-6'>
+                                                    <button
+                                                        className={`h-8 w-full text-left hover:text-white transition-colors duration-200 ease-in-out ${
+                                                            playlist.id === playlistID ? 'text-white' : ''
+                                                        }`}
+                                                        onClick={() => selectPlaylistHandler(playlist.id)}>
+                                                        <span className='block text-[13px] leading-[15px] truncate whitespace-nowrap tracking-wide'>
+                                                            {playlist.name}
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        ))}
+                                    </div>
+                                </div>
+                            </ul>
+                        </OverlayScrollbarsComponent>
+                    </div>
                 </div>
             </div>
         </nav>

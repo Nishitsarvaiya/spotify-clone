@@ -107,6 +107,19 @@ body {
     word-break: break-all;
 }
 
+.os-theme-spotify-clone > .os-scrollbar-vertical {
+    -webkit-app-region: no-drag;
+    bottom: 4px;
+    padding: 2px;
+    width: 1rem;
+}
+
+.os-theme-spotify-clone > .os-scrollbar-vertical > .os-scrollbar-track > .os-scrollbar-handle {
+    background: rgba(255, 255, 255, 0.3);
+    max-height: none;
+    min-height: 30px;
+}
+
 /* .encore-dark-theme,.encore-dark-theme .encore-base-set {
     --background-base: #121212;
     --background-highlight: #1a1a1a;
