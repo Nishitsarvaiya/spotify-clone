@@ -129,24 +129,9 @@ const Sidebar = () => {
                                     style={{
                                         contain: 'layout size',
                                         position: 'relative',
-                                        height: playlists.length * 32 * 2,
+                                        height: playlists.length * 32,
                                     }}>
                                     <div>
-                                        {playlists.map((playlist) => (
-                                            <li key={playlist.id}>
-                                                <div className='px-6'>
-                                                    <button
-                                                        className={`h-8 w-full text-left hover:text-white transition-colors duration-200 ease-in-out ${
-                                                            playlist.id === playlistID ? 'text-white' : ''
-                                                        }`}
-                                                        onClick={() => selectPlaylistHandler(playlist.id)}>
-                                                        <span className='block text-[13px] leading-[15px] truncate whitespace-nowrap tracking-wide'>
-                                                            {playlist.name}
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                            </li>
-                                        ))}
                                         {playlists.map((playlist) => (
                                             <li key={playlist.id}>
                                                 <div className='px-6'>

@@ -1,15 +1,26 @@
+import { useRecoilState } from 'recoil';
+import { currentTrackIdState, isPlayingState } from '../../atoms/songAtom';
 import { formatDate, formatDuration } from '../../lib/time';
-import { SongRow } from '..';
+// import useSpotify from '../../hooks/useSpotify';
+import { formatArtists } from '../../lib/utility';
 
 const Song = ({ song, idx }) => {
-    const artists = song.track.artists.map((artist, idx) => (
-        <a href={artist.external_urls.spotify} className='hover:text-white hover:underline' key={artist.name}>
-            {(idx ? ', ' : '') + artist.name}
-        </a>
-    ));
+    // const spotifyApi = useSpotify();
+
+    const [currentTrackId, setCurrentTrackId] = useRecoilState(currentTrackIdState);
+    const [isPlaying, setIsPlaying] = useRecoilState(isPlayingState);
+
+    const playSong = () => {
+        setCurrentTrackId(song.track.id);
+        setIsPlaying(true);
+        console.log('>>> PLAYING: ' + song.track.name + ' <<<');
+        // spotifyApi.play({
+        //     uris: [song.track.uri],
+        // });
+    };
 
     return (
-        <div className='song'>
+        <div className='song' onClick={playSong}>
             <div className='grid-row h-14 relative rounded-[4px] grid gap-4 px-4 hover:bg-white hover:bg-opacity-10'>
                 <div className='flex items-center justify-self-end'>
                     <div className='inline-block w-4 h-4 min-h-[16px] min-w-[16px] relative text-[#b3b3b3]'>
@@ -23,7 +34,7 @@ const Song = ({ song, idx }) => {
                             {song.track.name}
                         </div>
                         <div className='text-[13px] leading-[15px] text-[#b3b3b3]  line-clamp-1 truncate tracking-wider'>
-                            {artists}
+                            {formatArtists(song.track.artists)}
                         </div>
                     </div>
                 </div>

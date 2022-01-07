@@ -12,9 +12,12 @@ module.exports = {
             xl: '1280px',
             '2xl': '1400px',
         },
+        boxShadow: {
+            small: '0 0 10px rgba(0, 0, 0, 0.3)',
+        },
     },
     variants: {
         extend: {},
     },
-    plugins: [require('tailwind-scrollbar-hide')],
+    plugins: [],
 };

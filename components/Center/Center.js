@@ -20,7 +20,6 @@ const colors = [
 ];
 
 const Center = () => {
-    const { data: session } = useSession();
     const [headerColor, setHeaderColor] = useState(null);
     const spotifyApi = useSpotify();
     const playlistID = useRecoilValue(playlistIdState);
